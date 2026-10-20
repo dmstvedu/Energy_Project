@@ -1,0 +1,17 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final
+    ports:
+      - "5279:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  tests:
+    image: mcr.microsoft.com/dotnet/sdk:9.0
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    command: dotnet test SmartHomeTests/SmartHomeTests.csproj --logger:console;verbosity=normal
